@@ -1,0 +1,16 @@
+from dashboard_core import *
+F=init_page()
+render_header()
+kpi_gap=home_away_ppg_gap(F.scope_all_venues); kpi_conversion=conversion_rate(F.filtered); kpi_discipline=discipline_index(F.filtered)
+base_gap=home_away_ppg_gap(F.baseline_all); base_conversion=conversion_rate(F.baseline_filtered); base_discipline=discipline_index(F.baseline_filtered)
+c1,c2,c3=st.columns(3,gap='large')
+c1.metric('Avantage domicile','N/D' if pd.isna(kpi_gap) else f'{kpi_gap:+.2f} pt/match',delta=fmt_delta(kpi_gap,base_gap))
+c2.metric('Conversion des tirs cadrés','N/D' if pd.isna(kpi_conversion) else f'{kpi_conversion:.1f} %',delta=fmt_delta(kpi_conversion,base_conversion,' pt'))
+c3.metric('Indice disciplinaire','N/D' if pd.isna(kpi_discipline) else f'{kpi_discipline:.2f} / match',delta=fmt_delta(kpi_discipline,base_discipline),delta_color='inverse')
+st.caption("Comparaison avec 2019-20. L'avantage domicile est calculé sur les deux lieux.")
+st.divider()
+section_intro('Vue exécutive','Trois leviers pour lire la performance','Utilisez la navigation à gauche pour analyser séparément la domination du jeu, la conversion, la discipline et le classement.')
+cols=st.columns(3)
+for col,titre,texte,couleur in [(cols[0],'Dominer le jeu','Mesurer l’avantage compétitif et la capacité à cadrer davantage.',THEME['blue']),(cols[1],'Convertir','Relier le taux de conversion aux points obtenus.',THEME['green']),(cols[2],'Maîtriser le risque','Observer la relation entre exposition disciplinaire et performance.',THEME['gold'])]:
+    with col: insight_card(titre,texte,couleur)
+render_footer()
