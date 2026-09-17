@@ -4,7 +4,7 @@ import pandas as pd
 import plotly.express as px
 import streamlit as st
 
-DATA_DIR = Path(__file__).parent / "data"
+DATA_DIR = Path(__file__).parent / "Data"
 DATA_DIR.mkdir(exist_ok=True)
 SEASONS = {"2019-20":"1920","2020-21":"2021","2021-22":"2122","2022-23":"2223","2023-24":"2324"}
 SEASON_ORDER = list(SEASONS)
